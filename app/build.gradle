@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+project.ext.react = [
+        entryFile: "../index.js"
+]
+
+
+apply from: "../node_modules/react-native/react.gradle"
+
+def enableSeparateBuildPerCPUArchitecture = false
+def enableProguardInReleaseBuilds = false
+
+android {
+    signingConfigs {
+        release {
+            keyAlias 'my-key-alias'
+            keyPassword '1q2w3e4rasdf'
+            storeFile file('D:/reactnative/backups/AndroidKissReactNative/app/my-release-key.keystore')
+            storePassword '1q2w3e4rasdf'
+        }
+    }
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.hero.zhaoq.androidkissreactnative"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        //jni  报错    指定ndk
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+//    packagingOptions {
+//        exclude "lib/arm64-v8a/librealm-jni.so"
+//    }
+}
+
+dependencies {
+    implementation project(':react-native-date-picker')
+    implementation project(':react-native-vector-icons')
+    //新添加的
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testCompile 'junit:junit:4.12'
+    //    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    //3，添加   gradle 依赖：
+    implementation 'com.facebook.react:react-native:+'
+    // From node_modules.
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation files('libs/arcsoft_face.jar')
+    implementation files('libs/Msc.jar')
+    implementation files('libs/Sunflower.jar')
+}
