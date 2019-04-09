@@ -1,1 +1,2 @@
 
+React Native混合安卓原生开发的pad端会议管理app，需配合移动端app使用
